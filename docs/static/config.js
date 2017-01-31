@@ -1,5 +1,6 @@
 window.SLIDES_CONFIG = {
-  host: 'https://myst729.github.io/slides',
-  base: '/slides/',
-  markdown: './static/slides.md'
+  host: 'https://myst729.github.io/takahashi',
+  base: '/takahashi/',
+  style: 'light', // 'dark'
+  content: './static/content.json'
 }
