@@ -1,10 +1,10 @@
 <template>
-  <div class="slides" :class="styleClass">
+  <v-touch class="slides" :class="styleClass" @swipeleft="nextSlide" @swiperight="prevSlide">
     <transition name="fade" mode="out-in" appear>
       <spinner v-if="total === 0" key="spinner" class="spinner"></spinner>
       <router-view v-if="total > 0" :key="$route.path" class="slide"></router-view>
     </transition>
-  </div>
+  </v-touch>
 </template>
 
 <script>
@@ -56,17 +56,25 @@
         this.$router.push(`/${p}`)
       },
 
+      prevSlide () {
+        this.navigate(this.page - 1)
+      },
+
+      nextSlide () {
+        this.navigate(this.page + 1)
+      },
+
       bindKeyEvents () {
         window.addEventListener('keydown', e => {
           switch (e.keyCode) {
             case 37: // left
             case 38: // up
-              this.navigate(this.page - 1)
+              this.prevSlide()
               return
             case 32: // space
             case 39: // right
             case 40: // down
-              this.navigate(this.page + 1)
+              this.nextSlide()
               return
           }
         }, false)
