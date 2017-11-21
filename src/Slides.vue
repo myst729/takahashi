@@ -36,17 +36,13 @@
     },
 
     methods: {
-      getContent (url) {
-        return this.$http.get(url)
-      },
-
       saveContent (content) {
         this.$store.dispatch('meta', content.meta)
         this.$store.dispatch('slides', content.slides)
       },
 
       loadContent (url) {
-        this.getContent(url)
+        fetch(url)
           .then(response => response.json())
           .then(this.saveContent)
       },
@@ -75,7 +71,6 @@
             case 39: // right
             case 40: // down
               this.nextSlide()
-              return
           }
         }, false)
       }

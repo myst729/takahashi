@@ -1,6 +1,6 @@
 window.SLIDES_CONFIG = {
   host: 'https://myst729.github.io/takahashi',
   base: '/takahashi/',
-  style: 'light', // 'dark'
+  style: 'dark', // 'light'
   content: './static/content.json'
 }
