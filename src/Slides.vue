@@ -1,5 +1,6 @@
 <template>
-  <v-touch class="slides" :class="styleClass" @swipeleft="nextSlide" @swiperight="prevSlide">
+  <v-touch class="slides" @swipeleft="nextSlide" @swiperight="prevSlide">
+    <div class="fullscreen" @click="toggleFullscreen"></div>
     <transition name="fade" mode="out-in" appear>
       <spinner v-if="total === 0" key="spinner" class="spinner"></spinner>
       <router-view v-if="total > 0" :key="$route.path" class="slide"></router-view>
@@ -20,10 +21,6 @@
     computed: {
       config () {
         return this.$store.getters.config
-      },
-
-      styleClass () {
-        return `slides-${this.config.style}`
       },
 
       page () {
@@ -73,12 +70,20 @@
               this.nextSlide()
           }
         }, false)
+      },
+
+      toggleFullscreen () {
+        if (document.webkitFullscreenElement) {
+          document.webkitExitFullscreen()
+        } else {
+          document.documentElement.webkitRequestFullscreen()
+        }
       }
     },
 
     created () {
       if (this.total === 0) {
-        this.loadContent(this.config.content)
+        this.loadContent('./static/content.json')
       }
       this.bindKeyEvents()
     }
@@ -96,25 +101,29 @@
     height 100%
 
   body
+    background #2d3e4f
     font-family 'PingFang SC', 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
     margin 0
 
+  .fullscreen
+    background #283847
+    height 48px
+    width 48px
+    position fixed
+    top 0
+    right 0
+    z-index 1000
+
   .slides
+    background #2c3e50
+    color #ecf0f1
     display flex
     align-items center
     justify-content center
     height 100%
     width 100%
-
-  .slides-light
-    background #ecf0f1
-    color #34495e
-
-  .slides-dark
-    background #2c3e50
-    color #ecf0f1
 
   .spinner
     height 10vh

@@ -20,9 +20,6 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
-  externals: {
-    config: 'SLIDES_CONFIG'
-  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

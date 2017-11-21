@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <p v-for="line in lines" class="line" :style="{'font-size': fontSize + 'px'}" v-text="line"></p>
+    <p v-for="(line, n) in lines" :key="n" class="line" :style="{'font-size': fontSize + 'px'}" v-text="line"></p>
   </div>
 </template>
 

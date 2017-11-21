@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as config from 'config'
 
 Vue.use(Vuex)
 
 const state = {
-  config,
   meta: {},
   slides: [],
   page: -1
@@ -40,7 +38,6 @@ const mutations = {
 }
 
 const getters = {
-  config: state => state.config,
   meta: state => state.meta,
   slides: state => state.slides,
   page: state => state.page
