@@ -9,85 +9,85 @@
 </template>
 
 <script>
-  import Spinner from './components/Spinner'
+import Spinner from './components/Spinner'
 
-  export default {
-    name: 'slides',
+export default {
+  name: 'slides',
 
-    components: {
-      Spinner
+  components: {
+    Spinner
+  },
+
+  computed: {
+    config () {
+      return this.$store.getters.config
     },
 
-    computed: {
-      config () {
-        return this.$store.getters.config
-      },
-
-      page () {
-        return this.$store.getters.page
-      },
-
-      total () {
-        return this.$store.getters.slides.length
-      }
+    page () {
+      return this.$store.getters.page
     },
 
-    methods: {
-      saveContent (content) {
-        this.$store.dispatch('meta', content.meta)
-        this.$store.dispatch('slides', content.slides)
-      },
-
-      loadContent (url) {
-        fetch(url)
-          .then(response => response.json())
-          .then(this.saveContent)
-      },
-
-      navigate (page) {
-        const p = Math.min(Math.max(1, page), this.total)
-        this.$router.push(`/${p}`)
-      },
-
-      prevSlide () {
-        this.navigate(this.page - 1)
-      },
-
-      nextSlide () {
-        this.navigate(this.page + 1)
-      },
-
-      bindKeyEvents () {
-        window.addEventListener('keydown', e => {
-          switch (e.keyCode) {
-            case 37: // left
-            case 38: // up
-              this.prevSlide()
-              return
-            case 32: // space
-            case 39: // right
-            case 40: // down
-              this.nextSlide()
-          }
-        }, false)
-      },
-
-      toggleFullscreen () {
-        if (document.webkitFullscreenElement) {
-          document.webkitExitFullscreen()
-        } else {
-          document.documentElement.webkitRequestFullscreen()
-        }
-      }
-    },
-
-    created () {
-      if (this.total === 0) {
-        this.loadContent('./static/content.json')
-      }
-      this.bindKeyEvents()
+    total () {
+      return this.$store.getters.slides.length
     }
+  },
+
+  methods: {
+    saveContent (content) {
+      this.$store.dispatch('meta', content.meta)
+      this.$store.dispatch('slides', content.slides)
+    },
+
+    loadContent (url) {
+      fetch(url)
+        .then(response => response.json())
+        .then(this.saveContent)
+    },
+
+    navigate (page) {
+      const p = Math.min(Math.max(1, page), this.total)
+      this.$router.push(`/${p}`)
+    },
+
+    prevSlide () {
+      this.navigate(this.page - 1)
+    },
+
+    nextSlide () {
+      this.navigate(this.page + 1)
+    },
+
+    bindKeyEvents () {
+      window.addEventListener('keydown', e => {
+        switch (e.keyCode) {
+          case 37: // left
+          case 38: // up
+            this.prevSlide()
+            return
+          case 32: // space
+          case 39: // right
+          case 40: // down
+            this.nextSlide()
+        }
+      }, false)
+    },
+
+    toggleFullscreen () {
+      if (document.webkitFullscreenElement) {
+        document.webkitExitFullscreen()
+      } else {
+        document.documentElement.webkitRequestFullscreen()
+      }
+    }
+  },
+
+  created () {
+    if (this.total === 0) {
+      this.loadContent(`${process.env.BASE_URL}content.json`)
+    }
+    this.bindKeyEvents()
   }
+}
 </script>
 
 <style lang="stylus">

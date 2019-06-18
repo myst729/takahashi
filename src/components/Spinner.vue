@@ -7,9 +7,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'spinner'
-  }
+export default {
+  name: 'spinner'
+}
 </script>
 
 <style lang="stylus">
