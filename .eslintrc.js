@@ -3,7 +3,7 @@ module.exports = {
   env: {
     browser: true
   },
-  'extends': [
+  extends: [
     'plugin:vue/essential',
     '@vue/standard'
   ],
