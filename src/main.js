@@ -1,17 +1,12 @@
-import FastClick from 'fastclick'
-import Vue from 'vue'
-import VueTouch from 'vue-touch'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import Vue3TouchEvents from 'vue3-touch-events'
 import router from './router'
-import store from './store'
-import Slides from './Slides'
+import App from './App.vue'
 
-FastClick.attach(document.body)
-Vue.use(VueTouch)
-
-const app = new Vue({
-  router,
-  store,
-  ...Slides
-})
-
-app.$mount('#app')
+const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia)
+app.use(router)
+app.use(Vue3TouchEvents)
+app.mount('#app')

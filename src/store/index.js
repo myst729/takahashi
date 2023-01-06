@@ -1,53 +1,20 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
 
-Vue.use(Vuex)
+export const useSlidesStore = defineStore('slides', () => {
+  const meta = ref({})
+  const slides = ref([])
+  const page = ref('')
 
-const state = {
-  meta: {},
-  slides: [],
-  page: -1
-}
-
-const actions = {
-  meta ({ commit, state }, meta) {
-    commit('setMeta', { meta })
-  },
-
-  slides ({ commit, state }, slides) {
-    commit('setSlides', { slides })
-  },
-
-  page ({ commit, state }, page) {
-    commit('setPage', { page })
+  function setMeta (val) {
+    meta.value = val
   }
-}
-
-const mutations = {
-  setMeta (state, { meta }) {
-    state.meta = meta
-  },
-
-  setSlides (state, { slides }) {
-    state.slides = slides
-  },
-
-  setPage (state, { page }) {
-    state.page = page
+  function setSlides (val) {
+    slides.value = val
   }
-}
+  function setPage (val) {
+    page.value = val
+  }
 
-const getters = {
-  meta: state => state.meta,
-  slides: state => state.slides,
-  page: state => state.page
-}
-
-const store = new Vuex.Store({
-  actions,
-  mutations,
-  getters,
-  state
+  return { meta, slides, page, setMeta, setSlides, setPage }
 })
-
-export default store

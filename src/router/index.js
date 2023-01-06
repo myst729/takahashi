@@ -1,17 +1,14 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Slide from '../components/Slide'
-
-Vue.use(VueRouter)
+import { createRouter, createWebHashHistory } from 'vue-router'
+import SlidePage from '../components/SlidePage.vue'
 
 var routes = [
-  { path: '/:page(\\d+)', component: Slide },
-  { path: '*', redirect: '/1' }
+  { path: '/:page(\\d+)', component: SlidePage },
+  { path: '/:pathMatch(.*)', redirect: '/1' },
 ]
 
-const router = new VueRouter({
-  mode: 'hash',
-  routes
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
 })
 
 export default router
