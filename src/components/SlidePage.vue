@@ -25,7 +25,6 @@ const getSlideContent = () => {
 }
 
 const calculateFontSize = () => {
-  console.log(1)
   const el = root.value
   if (el && el.parentNode) {
     const { height: slidesHeight, width: slidesWidth } = el.parentNode.getBoundingClientRect()

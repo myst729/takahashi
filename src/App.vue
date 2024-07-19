@@ -21,14 +21,24 @@ const store = useSlidesStore()
 const page = computed(() => store.page)
 const total = computed(() => store.slides.length)
 
+const breakLines = (text) => text.split('\n').map(l => l.trim()).filter(l => l.length)
+
+const parseContent = (text) => {
+  const [meta, content] = text.split(/\n-{3,}\n/)
+  const [title, speaker, url] = breakLines(meta)
+  const pages = breakLines(content).map(l => l.split(/\s{0,},\s{0,}/))
+  return {
+    meta: { title, speaker, url },
+    slides: pages,
+  }
+}
+
 const loadContent = async (url) => {
   const response = await fetch(url)
-  const { meta, slides } = await response.json()
-  setTimeout(() => {
-
+  const text = await response.text()
+  const { meta, slides } = parseContent(text)
   store.setMeta(meta)
   store.setSlides(slides)
-  }, 1000)
 }
 
 const navigate = (target) => {
@@ -46,15 +56,16 @@ const nextSlide = () => {
 
 const bindKeyEvents = () => {
   window.addEventListener('keydown', e => {
-    switch (e.keyCode) {
-      case 37: // left
-      case 38: // up
+    switch (e.key) {
+      case 'ArrowLeft':
+      case 'ArrowUp':
         prevSlide()
         return
-      case 32: // space
-      case 39: // right
-      case 40: // down
+      case ' ':
+      case 'ArrowRight':
+      case 'ArrowDown':
         nextSlide()
+        return
     }
   }, false)
 }
@@ -69,7 +80,7 @@ const toggleFullscreen = () => {
 
 onMounted(async () => {
   if (total.value === 0) {
-    await loadContent('./content.json')
+    await loadContent('./content.md')
     bindKeyEvents()
   }
 })
